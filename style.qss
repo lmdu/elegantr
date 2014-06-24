@@ -1,0 +1,72 @@
+*{
+	font-size:12px;
+	font-family: "Microsoft YaHei";
+}
+/* main windows */
+ElegantMainWindow{
+	background:#fff;
+}
+
+/* tool bar */
+QToolBar{
+	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffffff, stop: 1 #f2f2f2);
+	min-height:37px;
+	max-height:37px;
+	border-bottom:1px solid #a6a6a6;
+}
+/* menubar */
+
+
+/* status bar */
+QStatusBar{
+	background:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffffff, stop: 1 #ededed);
+	border-top:1px solid #ccc;
+	font-size:12px;
+}
+
+/* splitter */
+ElegantMainSplitter::handle{
+	background: #fff;
+}
+ElegantMainSplitter:handle:horizontal{
+	width:1px;
+}
+ElegantMainSplitter::handle:vertical{
+     height: 1px;
+}
+
+
+QTreeWidget{
+	border:1px solid #ddd;
+	border-top:0;
+	border-bottom:0;
+}
+
+QListWidget{
+	border:0;
+	show-decoration-selected: 1;
+}
+
+ElegantLibrary{
+	border:0;
+	show-decoration-selected: 1;
+}
+
+ElegantLibrary::item{
+	padding:2px;
+}
+
+ElegantLibrary::item::text{}
+
+SearchInput{
+	border:1px solid #a9a9a9;
+	padding:0px 3px 0px 18px;
+	border-radius: 2px;
+	min-width:300px;
+	max-width:300px;
+	margin-right:10px;
+	background: #fff url(img/search.png);
+	background-position: left center;
+	background-repeat: none;
+}
+	
