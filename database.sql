@@ -1,51 +1,38 @@
 create table `articles`(
-	`ID` integer primary key,
+	`id` integer primary key,
 	`title` text,
 	`abstract` text,
 	`doi` text,
 	`pmid` text,
-	`arxivId` text,
-	`started` integer,
+	`arxiv` text,
+	`favorite` integer,
 	`added` integer,
 	`note` text,
 	`privacy` integer,
-	`jId` integer,
 	`page` text,
 	`issue` text,
 	`volume` text,
-	`year` integer
-);
-
-create table `authors` (
-	`ID` integer,
-	`firstName` text,
-	`lastName` text
-);
-
-create table `collections` (
-	`cId` integer primary key,
-	`name` text,
-	`parent` integer,
-	`privacy` integer
-) 
-
-create table `journals` (
-	`jId` integer primary key,
-	`name` text,
-	`abbrev` text,
-	`issn` text,
+	`year` integer,
+	`authors` text,
+	`folder` integer,
+	`resource` integer,
 	`factor` real,
-	`five` real,
-	`issue` integer,
-	`halflife` text,
-	`immediacyIndex` real, 
-	`eigenfactor` real, 
-	`influenceScore` real,
-	`language` text,
+	`issn` text,
 	`publisher` text,
-	`country` text
+	`md5` text
+);
+
+create table `folders` (
+	`id` integer primary key,
+	`name` text,
+	`privacy` integer
 )
 
 create table `documents`(
-	docId integer primary key,
+	`id` integer primary key,
+	`title` text,
+	`note` text,
+	`type` text,
+	`added` integer,
+	`folder` integer
 );
