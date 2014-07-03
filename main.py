@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import re
 import sys
 from PySide.QtCore import *
 from PySide.QtGui import *
@@ -375,11 +375,39 @@ class ElegantLibrary(QListWidget):
 	def itemTwoClick(self, item):
 		self.prevText = item.text()
 
+class PDF:
+	def __init__(self, pdf):
+		self.pdf = pdf
 
+	def execute(self, program, args):
+		process = QProcess()
+		process.start(program, args)
+		if process.waitForFinished():
+			return process.readAll()
+
+	def getTotalPages(self):	
+		info = str(self.execute("pdfinfo", [self.pdf]))
+		for line in info.split("\n"):
+			if line.startswith("Pages:"):
+				return line.strip().split()[1]
+
+	def getFirstPage(self):
+		return self.execute("pdftotext", ["-l", "1", self.pdf, "-"])
+
+	def getLastPage(self):
+		pages = self.getTotalPages()
+		return self.execute("pdftotext", ["-f", pages, self.pdf, "-"])
+
+	def getContents(self):
+		return self.execute("pdftotext", [self.pdf])
+
+	def getDoi(self):
+		pass
 
 def main():
 	app = QApplication(sys.argv)
 	elegantr = ElegantMainWindow()
+	print PDF('test.pdf').getLastPage()
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
