@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import re
 import sys
+import time
 from PySide.QtCore import *
 from PySide.QtGui import *
 
@@ -402,12 +403,22 @@ class PDF:
 		return self.execute("pdftotext", [self.pdf])
 
 	def getDoi(self):
-		pass
+		doiPattern = re.compile(r'(?:doi[:/]?)?(10.\d{4,}(?:.\d+)?/[^\s"<>]+)')
+		content = self.getFirstPage()
+		m = doiPattern.search(content)
+		if m:
+			return m.group(1)
+		content = self.getLastPage()
+		m = doiPattern.findall(content)
+		if m:
+			return m[-1]
+		return None
+
 
 def main():
 	app = QApplication(sys.argv)
 	elegantr = ElegantMainWindow()
-	print PDF('test.pdf').getLastPage()
+	print PDF('test.pdf').getDoi()
 	sys.exit(app.exec_())
 
 if __name__ == '__main__':
