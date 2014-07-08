@@ -19,7 +19,8 @@ create table `articles`(
 	`factor` real,
 	`issn` text,
 	`publisher` text,
-	`md5` text
+	`md5` text,
+	`type` text
 );
 
 create table `folders` (
@@ -27,12 +28,3 @@ create table `folders` (
 	`name` text,
 	`privacy` integer
 )
-
-create table `documents`(
-	`id` integer primary key,
-	`title` text,
-	`note` text,
-	`type` text,
-	`added` integer,
-	`folder` integer
-);
