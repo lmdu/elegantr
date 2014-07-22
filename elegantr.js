@@ -4,12 +4,15 @@
  *Date: 2014-7-4
  */
 
-var net = require('net')
-var port = 7000
+var net = require('net');
+var port = 7070;
+var clients = [];
 
 var server = net.createServer(function(socket){
 	console.log('connect: ' + socket.remoteAddress + ':' + socket.remotePort);
-	socket.setEncoding('binary');
+	socket.setEncoding('utf-8');
+
+	clients.push(socket);
 
 	//timeout event
 	socket.setTimeout(200000, function(){
@@ -19,7 +22,6 @@ var server = net.createServer(function(socket){
 
 	//when connect
 	socket.on('connect', function(socket){
-		socket.write
 	});
 
 	//accept data event
@@ -49,5 +51,5 @@ server.on('listening', function(){
 
 //server error event
 server.on('error', function(exception){
-	console.log('server error: ' + exception)
+	console.log('server error: ' + exception);
 });
