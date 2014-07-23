@@ -5,28 +5,40 @@
  */
 
 var net = require('net');
-var port = 7070;
+var http = require('http');
 var clients = [];
 
 var server = net.createServer(function(socket){
-	console.log('connect: ' + socket.remoteAddress + ':' + socket.remotePort);
+	//when connect
 	socket.setEncoding('utf-8');
-
 	clients.push(socket);
-
-	//timeout event
+	
+	/*timeout event
 	socket.setTimeout(200000, function(){
-		console.log('Timeout');
 		socket.end();
 	});
-
-	//when connect
-	socket.on('connect', function(socket){
-	});
+	*/
 
 	//accept data event
 	socket.on('data', function(data){
-		console.log('recv: ' + data);
+		try{
+			data = JSON.parse(data);
+			runCommand(socket, data);
+		}catch(err){
+			socket.write(data + "\n" + err);
+		}
+	});
+
+	//end
+	socket.on('end', function(){
+		console.log('end');
+	});
+
+	//client close conncet event
+	socket.on('close', function(data){
+		var idx = clients.indexOf(socket);
+		delete clients[idx];
+		console.log('closed');
 	});
 
 	//error event
@@ -35,21 +47,37 @@ var server = net.createServer(function(socket){
 		socket.end();
 	});
 
-	//client close conncet event
-	socket.on('close', function(data){
-		console.log('close: ' + socket.remoteAddress + ":" + socket.remotePort);
-	});
-
 });
 
-server.listen(port);
-
-//sever listen event
 server.on('listening', function(){
 	console.log('server listening: ' + server.address().port);
+});
+
+server.on('connection', function(socket){
+	console.log('connect: ' + socket.remoteAddress + ':' + socket.remotePort);
 });
 
 //server error event
 server.on('error', function(exception){
 	console.log('server error: ' + exception);
 });
+
+server.listen(7000);
+
+function runCommand(socket, data){
+	switch(data.cmd){
+		case "LOGIN":
+			socket.write("Login command");
+			break;
+		case "DETAIL":
+			socket.write("Detail command");
+			break;
+		default:
+			socket.write("No command");
+	}
+}
+
+function doiDetails(doi){
+	BASE_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
+
+}
