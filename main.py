@@ -15,8 +15,8 @@ ElegantMainWindow{
 }
 QToolBar{
 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffffff, stop: 1 #f2f2f2);
-	min-height:32px;
-	max-height:32px;
+	min-height:40px;
+	max-height:40px;
 	border-bottom:1px solid #a6a6a6;
 	spacing: 3px;
 }
@@ -24,6 +24,8 @@ QStatusBar{
 	background:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffffff, stop: 1 #ededed);
 	border-top:1px solid #ccc;
 	font-size:12px;
+	min-height: 25px;
+	max-height: 25px;
 }
 ElegantMainSplitter::handle{
 	background: #fff;

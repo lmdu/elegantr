@@ -6,6 +6,8 @@
 
 var net = require('net');
 var http = require('http');
+var mendeley = require('./mendeley');
+
 var clients = [];
 
 var server = net.createServer(function(socket){
@@ -13,17 +15,11 @@ var server = net.createServer(function(socket){
 	socket.setEncoding('utf-8');
 	clients.push(socket);
 	
-	/*timeout event
-	socket.setTimeout(200000, function(){
-		socket.end();
-	});
-	*/
-
 	//accept data event
 	socket.on('data', function(data){
 		try{
 			data = JSON.parse(data);
-			runCommand(socket, data);
+			mendeley.getDetailsFromMenendely(data, socket);
 		}catch(err){
 			socket.write(data + "\n" + err);
 		}
@@ -63,21 +59,3 @@ server.on('error', function(exception){
 });
 
 server.listen(7000);
-
-function runCommand(socket, data){
-	switch(data.cmd){
-		case "LOGIN":
-			socket.write("Login command");
-			break;
-		case "DETAIL":
-			socket.write("Detail command");
-			break;
-		default:
-			socket.write("No command");
-	}
-}
-
-function doiDetails(doi){
-	BASE_URL = 'http://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?'
-
-}
